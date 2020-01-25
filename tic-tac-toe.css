@@ -1,0 +1,198 @@
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: local('Open Sans Light'), local('OpenSans-Light'), url(https://fonts.gstatic.com/s/opensans/v17/mem5YaGs126MiZpBA-UN_r8OUuhs.ttf) format('truetype');
+}
+*,
+*::after,
+*::before {
+  font-family: "Open Sans", sans-serif;
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  padding: 0;
+  color: #161616;
+}
+.board {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  justify-items: center;
+  align-items: center;
+  grid-template-columns: repeat(3, auto);
+}
+.board.x .cell:not(.x):not(.o):hover::before,
+.board.x .cell:not(.x):not(.o):hover::after {
+  content: "";
+  position: absolute;
+  width: calc(calc(150px*0.8)*0.1);
+  height: calc(150px*0.8);
+  background-color: #f0f0f0;
+  border-radius: 2px;
+}
+.board.x .cell:not(.x):not(.o):hover::before {
+  transform: rotate(45deg);
+}
+.board.x .cell:not(.x):not(.o):hover::after {
+  transform: rotate(-45deg);
+}
+.board.o .cell:not(.x):not(.o):hover::before,
+.board.o .cell:not(.x):not(.o):hover::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+}
+.board.o .cell:not(.x):not(.o):hover::before {
+  width: calc(150px*0.8);
+  height: calc(150px*0.8);
+  background-color: #f0f0f0;
+}
+@media only screen and (max-width: 768px) {
+  .board.o .cell:not(.x):not(.o):hover::before {
+    width: calc(calc(150px*0.8)*0.8);
+    height: calc(calc(150px*0.8)*0.8);
+  }
+}
+.board.o .cell:not(.x):not(.o):hover::after {
+  width: calc(calc(150px*0.8)*0.8);
+  height: calc(calc(150px*0.8)*0.8);
+  background-color: white;
+}
+@media only screen and (max-width: 768px) {
+  .board.o .cell:not(.x):not(.o):hover::after {
+    width: calc(calc(150px*0.8)*0.6);
+    height: calc(calc(150px*0.8)*0.6);
+  }
+}
+.board.x,
+.board.o {
+  cursor: not-allowed;
+}
+.cell {
+  width: 150px;
+  height: 150px;
+  border: 2px solid #161616;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+}
+@media only screen and (max-width: 768px) {
+  .cell {
+    width: calc(150px - 50px);
+    height: calc(150px - 50px);
+  }
+}
+.cell:first-child,
+.cell:nth-child(2),
+.cell:nth-child(3) {
+  border-top: none;
+}
+.cell:nth-child(3n + 1) {
+  border-left: none;
+}
+.cell:nth-child(3n + 3) {
+  border-right: none;
+}
+.cell:last-child,
+.cell:nth-child(8),
+.cell:nth-child(7) {
+  border-bottom: none;
+}
+.cell.x::before,
+.cell.x::after {
+  content: "";
+  position: absolute;
+  width: calc(calc(150px*0.8)*0.1);
+  height: calc(150px*0.8);
+  background-color: #00d8ff;
+  border-radius: 2px;
+}
+.cell.x::before {
+  transform: rotate(45deg);
+}
+.cell.x::after {
+  transform: rotate(-45deg);
+}
+.cell.o::before,
+.cell.o::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+}
+.cell.o::before {
+  width: calc(150px*0.8);
+  height: calc(150px*0.8);
+  background-color: #ff0000;
+}
+@media only screen and (max-width: 768px) {
+  .cell.o::before {
+    width: calc(calc(150px*0.8)*0.8);
+    height: calc(calc(150px*0.8)*0.8);
+  }
+}
+.cell.o::after {
+  width: calc(calc(150px*0.8)*0.8);
+  height: calc(calc(150px*0.8)*0.8);
+  background-color: white;
+}
+@media only screen and (max-width: 768px) {
+  .cell.o::after {
+    width: calc(calc(150px*0.8)*0.6);
+    height: calc(calc(150px*0.8)*0.6);
+  }
+}
+.cell.x,
+.cell.o {
+  cursor: not-allowed;
+}
+#msg {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #161616;
+  font-size: 3.5rem;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+#msg > div {
+  margin-bottom: 25px;
+}
+#msg #restart-btn {
+  background-color: white;
+  color: #161616;
+  border: 2px solid #161616;
+  border-radius: 2px;
+  font-size: 2.5rem;
+  padding: 10px 50px;
+  outline: none;
+  cursor: pointer;
+}
+#msg #restart-btn:hover {
+  background-color: #161616;
+  color: white;
+  border: none;
+}
+#msg #restart-btn:focus {
+  background-color: #dcdcdc;
+  color: #161616;
+  border: none;
+  border: 2px solid #161616;
+}
+#msg.show {
+  display: flex;
+}

@@ -1,0 +1,242 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300&display=swap");
+
+*,
+*::after,
+*::before {
+  font-family: "Open Sans", sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  color: @black;
+}
+
+@red: rgb(255, 0, 0);
+@blue: rgb(0, 216, 255);
+@gray: rgb(240, 240, 240);
+@dark-gray: rgb(220, 220, 220);
+@black: rgb(22, 22, 22);
+
+@cell-size: 150px;
+@mark-size: calc(@cell-size*.8);
+
+@phone: ~"only screen and (max-width: 768px)";
+
+@red: rgb(255, 0, 0);
+@blue: rgb(0, 216, 255);
+@gray: rgb(240, 240, 240);
+@dark-gray: rgb(220, 220, 220);
+@black: rgb(22, 22, 22);
+
+.board {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  justify-items: center;
+  align-items: center;
+  grid-template-columns: repeat(3, auto);
+
+  // Hover effects - X
+  &.x .cell:not(.x):not(.o):hover::before,
+  &.x .cell:not(.x):not(.o):hover::after {
+    content: "";
+    position: absolute;
+    width: calc(@mark-size*.10);
+    height: @mark-size;
+    background-color: @gray;
+    border-radius: 2px;
+  }
+
+  &.x .cell:not(.x):not(.o):hover::before {
+    transform: rotate(45deg);
+  }
+
+  &.x .cell:not(.x):not(.o):hover::after {
+    transform: rotate(-45deg);
+  }
+
+  // Hover effects - O
+  &.o .cell:not(.x):not(.o):hover::before,
+  &.o .cell:not(.x):not(.o):hover::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+  }
+
+  &.o .cell:not(.x):not(.o):hover::before {
+    width: @mark-size;
+    height: @mark-size;
+
+    @media @phone {
+      width: calc(@mark-size*.8);
+      height: calc(@mark-size*.8);
+    }
+
+    background-color: @gray;
+  }
+
+  &.o .cell:not(.x):not(.o):hover::after {
+    width: calc(@mark-size*.8);
+    height: calc(@mark-size*.8);
+
+    @media @phone {
+      width: calc(@mark-size*.6);
+      height: calc(@mark-size*.6);
+    }
+
+    background-color: white;
+  }
+
+  &.x,
+  &.o {
+    cursor: not-allowed;
+  }
+}
+
+.cell {
+  width: @cell-size;
+  height: @cell-size;
+
+  @media @phone {
+    width: calc(@cell-size - 50px);
+    height: calc(@cell-size - 50px);
+  }
+
+  border: 2px solid @black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+
+  // Remover outer board boarders
+  &:first-child,
+  &:nth-child(2),
+  &:nth-child(3) {
+    border-top: none;
+  }
+
+  &:nth-child(3n + 1) {
+    border-left: none;
+  }
+
+  &:nth-child(3n + 3) {
+    border-right: none;
+  }
+
+  &:last-child,
+  &:nth-child(8),
+  &:nth-child(7) {
+    border-bottom: none;
+  }
+
+  // Create X
+  &.x::before,
+  &.x::after {
+    content: "";
+    position: absolute;
+    width: calc(@mark-size*.10);
+    height: @mark-size;
+    background-color: @blue;
+    border-radius: 2px;
+  }
+
+  &.x::before {
+    transform: rotate(45deg);
+  }
+
+  &.x::after {
+    transform: rotate(-45deg);
+  }
+
+  // Create O
+  &.o::before,
+  &.o::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+  }
+
+  &.o::before {
+    width: @mark-size;
+    height: @mark-size;
+
+    @media @phone {
+      width: calc(@mark-size*.8);
+      height: calc(@mark-size*.8);
+    }
+
+    background-color: @red;
+  }
+
+  &.o::after {
+    width: calc(@mark-size*.8);
+    height: calc(@mark-size*.8);
+
+    @media @phone {
+      width: calc(@mark-size*.6);
+      height: calc(@mark-size*.6);
+    }
+
+    background-color: white;
+  }
+
+  &.x,
+  &.o {
+    cursor: not-allowed;
+  }
+}
+
+#msg {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: @black;
+  font-size: 3.5rem;
+  background-color: rgba(255, 255, 255, 0.9);
+
+  > div {
+    margin-bottom: 25px;
+  }
+
+  #restart-btn {
+    background-color: white;
+    color: @black;
+    border: 2px solid @black;
+    border-radius: 2px;
+    font-size: 2.5rem;
+    padding: 10px 50px;
+    outline: none;
+    cursor: pointer;
+
+    &:hover {
+      background-color: @black;
+      color: white;
+      border: none;
+    }
+
+    &:focus {
+      background-color: @dark-gray;
+      color: @black;
+      border: none;
+      border: 2px solid @black;
+    }
+  }
+
+  &.show {
+    display: flex;
+  }
+}
